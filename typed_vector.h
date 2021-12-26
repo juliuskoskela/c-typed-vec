@@ -25,29 +25,29 @@ typedef struct s_vec_handle
                                                                                  \
 typedef t_vec_handle def;                                                        \
                                                                                  \
-size_t	def##_len(def *src);                                                     \
-size_t	def##_alloc_size(def *src);                                              \
-size_t	def##_elem_size();                                                       \
-size_t	def##_byte_size(def *src);                                               \
-int		def##_new(def *dst, size_t init_len);                                    \
-int		def##_new_from(def *dst, type *src, size_t len);                         \
-void	def##_free(def *src);                                                    \
-type	*def##_get(def *src, size_t index);                                      \
-int		def##_rcopy(def *dst, def *src, size_t start, size_t end);               \
-int		def##_ncopy(def *dst, def *src, size_t nelems);                          \
-int		def##_copy(def *dst, def *src);                                          \
-int		def##_push(def *dst, type src);                                          \
-int		def##_pop(type *dst, def *src);                                          \
-int 	def##_clear(def *src);                                                   \
-int		def##_insert(def *dst, type src, size_t index);                          \
-int		def##_remove(def *src, size_t index);                                    \
-int		def##_append(def *dst, def *src);                                        \
-int		def##_iter(def *src, void (*f) (type));                                  \
-type	*def##_find(def *src, bool (*f) (type));                                 \
-int		def##_map(def *dst, def *src, type (*f) (type));                         \
-int		def##_filter(def *dst, def *src, bool (*f) (type));                      \
-int		def##_reduce(type *dst, def *src, type (*f) (type, type));               \
-int		def##_sort(def *src, int (*f)(type, type));                              \
+size_t  def##_len(def *src);                                                     \
+size_t  def##_alloc_size(def *src);                                              \
+size_t  def##_elem_size();                                                       \
+size_t  def##_byte_size(def *src);                                               \
+int     def##_new(def *dst, size_t init_len);                                    \
+int     def##_new_from(def *dst, type *src, size_t len);                         \
+void    def##_free(def *src);                                                    \
+type    *def##_get(def *src, size_t index);                                      \
+int     def##_rcopy(def *dst, def *src, size_t start, size_t end);               \
+int     def##_ncopy(def *dst, def *src, size_t nelems);                          \
+int     def##_copy(def *dst, def *src);                                          \
+int     def##_push(def *dst, type src);                                          \
+int     def##_pop(type *dst, def *src);                                          \
+int     def##_clear(def *src);                                                   \
+int     def##_insert(def *dst, type src, size_t index);                          \
+int     def##_remove(def *src, size_t index);                                    \
+int     def##_append(def *dst, def *src);                                        \
+int     def##_iter(def *src, void (*f) (type));                                  \
+type    *def##_find(def *src, bool (*f) (type));                                 \
+int     def##_map(def *dst, def *src, type (*f) (type));                         \
+int     def##_filter(def *dst, def *src, bool (*f) (type));                      \
+int     def##_reduce(type *dst, def *src, type (*f) (type, type));               \
+int     def##_sort(def *src, int (*f)(type, type));                              \
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -182,7 +182,7 @@ void def##_free(def *src)                                                       
         return ;                                                                 \
     opaq = (t_vec *)src->_private;                                               \
     free(opaq->memory);                                                          \
-	free(opaq);                                                                  \
+    free(opaq);                                                                  \
     src->_private = NULL;                                                        \
 }                                                                                \
                                                                                  \
@@ -276,9 +276,9 @@ int def##_pop(type *dst, def *src)                                              
 int def##_clear(def *src)                                                        \
 {                                                                                \
     if (!src || def##_null(src))                                                 \
-	    return (-1);                                                             \
-	def##_len_set(src, 0);                                                       \
-	return (1);                                                                  \
+        return (-1);                                                             \
+    def##_len_set(src, 0);                                                       \
+    return (1);                                                                  \
 }                                                                                \
                                                                                  \
 int def##_insert(def *dst, type src, size_t index)                               \
@@ -464,9 +464,9 @@ static void def##_sort_recurse(def *src,                                        
         while (b >= low && f(mem[b], mem[pivot]) > 0)                            \
             b--;                                                                 \
         if (a < b)                                                               \
-            memswap(&mem[a], &mem[b], def##_elem_size());    \
+            memswap(&mem[a], &mem[b], def##_elem_size());                        \
     }                                                                            \
-    memswap(&mem[pivot], &mem[b], def##_elem_size());        \
+    memswap(&mem[pivot], &mem[b], def##_elem_size());                            \
     def##_sort_recurse(src, low, b - 1, f);                                      \
     def##_sort_recurse(src, b + 1, high, f);                                     \
 }                                                                                \
